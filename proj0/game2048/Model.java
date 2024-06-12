@@ -123,10 +123,16 @@ public class Model extends Observable {
                             board.move(c, nextNotEmptyTile, t);
                             score += tile(c, nextNotEmptyTile).value();
                             changed = true;
-                        } else if (tile(c, nextNotEmptyTile) == null){
-                                Tile t = tile(c, r);
-                                board.move(c, nextNotEmptyTile, t);
-                                changed = true;
+                        } else if (tile(c, nextNotEmptyTile) != null &&
+                                tile(c, r).value() != tile(c, nextNotEmptyTile).value()){
+                            Tile t = tile(c, r);
+                            board.move(c, nextNotEmptyTile - 1, t);
+                            changed = true;
+                        } else if (tile(c, nextNotEmptyTile) == null &&
+                                nextNotEmptyTile == size() - 1) {
+                            Tile t = tile(c, r);
+                            board.move(c, nextNotEmptyTile, t);
+                            changed = true;
                         }
                     }
                 }

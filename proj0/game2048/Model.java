@@ -113,6 +113,11 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        for(int c = 0; c <= size() - 1; c++){
+            for(int r = 0; r <= size() - 1; r++){
+
+            }
+        }
 
         checkGameOver();
         if (changed) {
@@ -138,6 +143,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i <= b.size() - 1; i++){
+            for(int j = 0; j <= b.size() - 1; j++){
+                if (b.tile(i, j) == null){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +160,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for (int i = 0; i <= b.size() - 1; i++){
+            for(int j = 0; j <= b.size() - 1; j++){
+                if (b.tile(i, j) != null){
+                    if(b.tile(i, j).value() == MAX_PIECE){
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +180,26 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        /** When emptySpace Exists, continue */
+        if(emptySpaceExists(b)){
+            return true;
+        }
+        for(int i = 0; i <= b.size() -1; i++){
+            for (int j = 0; j <= b.size() - 1; j++){
+                if(j + 1 < b.size() && b.tile(i, j).value() == b.tile(i, j + 1).value()){
+                    return true;
+                }
+                if(j - 1 >= 0 && b.tile(i, j).value() == b.tile(i, j - 1).value()){
+                    return true;
+                }
+                if(i + 1 < b.size() && b.tile(i, j).value() == b.tile(i + 1, j).value()){
+                    return true;
+                }
+                if(i - 1 >= 0 && b.tile(i, j).value() == b.tile(i - 1, j).value()){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

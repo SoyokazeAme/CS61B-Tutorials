@@ -125,8 +125,9 @@ public class Model extends Observable {
                             score += tile(c, nextNotEmptyTile).value();
                             mergedTile = tile(c, nextNotEmptyTile);
                             changed = true;
-                        } else if (tile(c, nextNotEmptyTile) != null &&
-                                tile(c, r).value() != tile(c, nextNotEmptyTile).value()){
+                        } else if ((tile(c, nextNotEmptyTile) != null &&
+                                tile(c, r).value() != tile(c, nextNotEmptyTile).value()) ||
+                                tile(c, nextNotEmptyTile) != null){
                             Tile t = tile(c, r);
                             board.move(c, nextNotEmptyTile - 1, t);
                             changed = true;
@@ -134,10 +135,6 @@ public class Model extends Observable {
                                 nextNotEmptyTile == size() - 1) {
                             Tile t = tile(c, r);
                             board.move(c, nextNotEmptyTile, t);
-                            changed = true;
-                        } else if (tile(c, nextNotEmptyTile) != null) {
-                            Tile t = tile(c, r);
-                            board.move(c, nextNotEmptyTile - 1, t);
                             changed = true;
                         }
                     }

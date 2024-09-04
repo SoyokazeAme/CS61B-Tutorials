@@ -1,11 +1,80 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
+    @Test
+    public void addFirstTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(2);
+        list.addFirst(3);
+    }
+
+    @Test
+    public void addLastTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addLast(2);
+        list.addLast(3);
+    }
+
+    @Test
+    public void addLastAndFirstTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addFirst(4);
+        list.addFirst(5);
+    }
+
+    @Test
+    public void printDequeTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addFirst(4);
+        list.addFirst(5);
+
+        list.printDeque();
+    }
+
+    @Test
+    public void removeFirst(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(4);
+        list.addFirst(5);
+
+        list.removeFirst();
+        list.removeFirst();
+    }
+
+    @Test
+    public void getTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(4);
+        list.addFirst(5);
+
+        System.out.println(list.get(0));
+        System.out.println(list.get(1));
+        System.out.println(list.get(2));
+    }
+
+    @Test
+    public void iteratorTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(2);
+        list.addFirst(3);
+
+        Iterator<Integer> iterator = list.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
 
     @Test
     /** Adds a few things to the list, checking isEmpty() and size() are correct,

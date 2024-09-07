@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class LinkedListDequeTest {
     @Test
     public void addFirstTest(){
-        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        LinkedListDeque<Integer> list = new LinkedListDeque<Integer>( 1);
         list.addFirst(2);
         list.addFirst(3);
     }
@@ -74,6 +74,56 @@ public class LinkedListDequeTest {
         while (iterator.hasNext()){
             System.out.println(iterator.next());
         }
+    }
+
+    @Test
+    public void equalsTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(2);
+        list.addFirst(3);
+
+        LinkedListDeque<Integer> list2 = new LinkedListDeque<>( 1);
+        list2.addFirst(2);
+        list2.addFirst(3);
+        list2.addFirst(4);
+
+        LinkedListDeque<Integer> list3 = new LinkedListDeque<>( 1);
+        list3.addFirst(5);
+        list3.addFirst(3);
+
+        LinkedListDeque<Integer> list4 = new LinkedListDeque<>( 1);
+        list4.addFirst(2);
+        list4.addFirst(3);
+
+        System.out.println(list.equals(list2));
+        System.out.println(list.equals(list3));
+        System.out.println(list2.equals(list3));
+        System.out.println(list.equals(list4));
+
+    }
+
+    @Test
+    public void addAndRemoveTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(2);
+        list.addFirst(3);
+
+        list.removeLast();
+        list.removeLast();
+        list.removeFirst();
+
+        list.printDeque();
+    }
+
+    @Test
+    public void getRecursiveTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>( 1);
+        list.addFirst(2);
+        list.addFirst(3);
+
+        System.out.println(list.getRecursive(0));
+        System.out.println(list.getRecursive(1));
+        System.out.println(list.getRecursive(2));
     }
 
     @Test

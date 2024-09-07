@@ -2,13 +2,13 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Iterable, Deque{
+public class LinkedListDeque<T> implements Iterable, Deque<T>{
     @Override
-    public Iterator<T> iterator() {
+    public Iterator iterator() {
         return new LinkedListDequeIterator();
     }
 
-    private class LinkedListDequeIterator implements Iterator<T>{
+    private class LinkedListDequeIterator implements Iterator<Object>{
         int currIndex;
         LinkNode iteratedObject;
 
@@ -57,26 +57,31 @@ public class LinkedListDeque<T> implements Iterable, Deque{
         size += 1;
     }
 
+    @Override
     public void addFirst(T item){
         sentinel.next = new LinkNode<>(sentinel, item, sentinel.next);
         sentinel.next.next.prev = sentinel.next;
         size += 1;
     }
 
+    @Override
     public void addLast(T item){
         last.prev = new LinkNode<>(last.prev, item, last);
         last.prev.prev.next = last.prev;
         size += 1;
     }
 
+    @Override
     public boolean isEmpty(){
         return size == 0;
     }
 
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public void printDeque(){
         while (sentinel.next.item != null){
             System.out.print(sentinel.next.item + " ");
@@ -86,20 +91,25 @@ public class LinkedListDeque<T> implements Iterable, Deque{
         System.out.println("print completed");
     }
 
+    @Override
     public void removeFirst(){
         if (size != 0){
             sentinel.next = sentinel.next.next;
+            sentinel.next.prev = sentinel;
             size -= 1;
         }
     }
 
+    @Override
     public void removeLast(){
         if (size != 0){
             last.prev = last.prev.prev;
+            last.prev.next = last;
             size -= 1;
         }
     }
 
+    @Override
     public T get(int index){
         if (index < size){
             int currIndex = -1;
@@ -116,8 +126,30 @@ public class LinkedListDeque<T> implements Iterable, Deque{
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof )
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (!(o instanceof Deque)) return false;
+        LinkNode p = sentinel.next;
+        LinkedListDeque comparedObject = (LinkedListDeque) o;
+        if (comparedObject.size != size()) return false;
+        while (comparedObject.sentinel.next != null){
+            if (comparedObject.sentinel.next.item != p.item){
+                return false;
+            }
+            comparedObject.sentinel.next = comparedObject.sentinel.next.next;
+            p = p.next;
+        }
+        return true;
+    }
+
+    public T getRecursive(int index){
+        return getRecursiveHelper(sentinel.next, index);
+    }
+    private T getRecursiveHelper(LinkNode p, int index){
+        if (index >= size) return null;
+        if (index == 0){
+            return (T) p.item;
+        }else {
+            return getRecursiveHelper(p.next, index - 1);
+        }
     }
 }

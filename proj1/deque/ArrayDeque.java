@@ -1,6 +1,8 @@
 package deque;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     T[] item;
@@ -97,8 +99,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
 
     @Override
     public void printDeque() {
-        for (int i = 0; i < size; i++){
-            System.out.print(item[(nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1] + "  ");
+        for (int i = 0; i < capacity; i++){
+            if (item[i] != null && i != capacity - 1){
+                System.out.print(item[i] + "  ");
+            }
         }
         System.out.println("\n");
     }
@@ -106,7 +110,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayDequeIterator<>();
     }
 
     private class ArrayDequeIterator<T> implements Iterator<T>{
@@ -119,7 +123,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         }
         @Override
         public boolean hasNext() {
-            return remainNum == 0;
+            return remainNum != 0;
         }
 
         @Override
@@ -127,11 +131,35 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
             for (int i = currIndex; i < capacity; i++){
                 if (item[i] != null){
                     currIndex = i;
+                    currIndex += 1;
                     remainNum -= 1;
                     break;
                 }
             }
-            return (T)item[currIndex];
+            return (T)item[currIndex - 1];
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Deque)) return false;
+        ArrayDeque ad = (ArrayDeque) o;
+        if (ad.size != size()) return false;
+        int indexOfAd = 0;
+        int indexOfItem = 0;
+        lp1:for (int i = indexOfItem; i < capacity; i++){
+            if (item[i] != null){
+                lp2:for (int j = indexOfAd; j < ad.capacity; j++){
+                    if (ad.item[j] != null){
+                        if (item[i] != ad.item[j]){
+                            return false;
+                        }
+                        indexOfAd = j + 1;
+                        break;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

@@ -2,6 +2,8 @@ package deque;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 public class ArrayDequeTest {
     @Test
     public void addTest(){
@@ -37,5 +39,60 @@ public class ArrayDequeTest {
         for (int i = 0; i < 15; i++){
             ad.removeFirst();
         }
+    }
+
+    @Test
+    public void iteratorTest(){
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addFirst(3);
+        ad.addFirst(4);
+
+        Iterator<Integer> iterator = ad.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
+
+    @Test
+    public void printDequeTest(){
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addFirst(3);
+        ad.addFirst(4);
+
+        ad.printDeque();
+    }
+
+    @Test
+    public void equalsTest(){
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addFirst(3);
+        ad.addFirst(4);
+
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+        ad2.addLast(1);
+        ad2.addLast(4);
+        ad2.addFirst(3);
+
+        ArrayDeque<Integer> ad3 = new ArrayDeque<>();
+        ad3.addLast(1);
+        ad3.addLast(2);
+        ad3.addFirst(4);
+        ad3.addFirst(3);
+
+        ArrayDeque<Integer> ad4 = new ArrayDeque<>();
+        ad4.addLast(1);
+        ad4.addLast(2);
+        ad4.addFirst(3);
+        ad4.addFirst(4);
+
+        System.out.println(ad.equals(ad2));
+        System.out.println(ad.equals(ad3));
+        System.out.println(ad.equals(ad4));
     }
 }

@@ -1,7 +1,8 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 import java.util.Iterator;
 
 public class ArrayDequeTest {
@@ -94,5 +95,47 @@ public class ArrayDequeTest {
         System.out.println(ad.equals(ad2));
         System.out.println(ad.equals(ad3));
         System.out.println(ad.equals(ad4));
+    }
+
+    @Test
+    public void testBuggyList(){
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        LinkedListDeque<Integer> lld = new LinkedListDeque<>();
+
+        int N = 50000;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 4);
+            switch (operationNumber){
+                case 0:{
+                    // addLast
+                    int randVal = StdRandom.uniform(0, 100);
+                    ad.addLast(randVal);
+                    lld.addLast(randVal);
+                    break;
+                }
+                case 1: {
+                    // size
+                    ad.size();
+                    lld.size();
+                    break;
+                }
+                case 2: {
+                    int randVal = StdRandom.uniform(0, 100);
+                    ad.addFirst(randVal);
+                    lld.addFirst(randVal);
+                    break;
+                }
+                case 3: {
+                    if (ad.size() >= 1 && lld.size() >= 1){
+                        // removeLast
+                        ad.removeFirst();
+                        ad.removeLast();
+                        lld.removeFirst();
+                        lld.removeLast();
+                        break;
+                    }
+                    break;
+                }
+            }}
     }
 }

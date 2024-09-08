@@ -1,8 +1,6 @@
 package deque;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Objects;
 
 public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     T[] item;
@@ -56,27 +54,31 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     }
 
     @Override
-    public void removeFirst() {
-        if (size < 1) return;
+    public T removeFirst() {
+        if (size < 1) return null;
         if ((double) size / capacity <= 0.25 && capacity > 8){
             resize(capacity / 2);
         }
         int currFirst = (nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1;
+        T removedItem = item[currFirst];
         item[currFirst] = null;
         size -= 1;
         nextFirst = currFirst;
+        return removedItem;
     }
 
     @Override
-    public void removeLast() {
-        if (size < 1) return;
+    public T removeLast() {
+        if (size < 1) return null;
         if (size / capacity <= 0.25 && capacity > 8){
             resize(capacity / 2);
         }
         int currLast = (nextLast - 1 < 0) ? (capacity - 1) : nextLast - 1;
+        T removedItem = item[currLast];
         item[currLast] = null;
         size -= 1;
         nextLast = currLast;
+        return removedItem;
     }
 
     @Override

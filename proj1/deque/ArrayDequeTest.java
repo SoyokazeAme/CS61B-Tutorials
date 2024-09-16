@@ -2,10 +2,27 @@ package deque;
 
 import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class ArrayDequeTest {
+    @Test
+    public void maxTest(){
+        MaxArrayDeque<Integer> ad = new MaxArrayDeque<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+        ad.addLast(5);
+        ad.addLast(1);
+        ad.addFirst(3);
+        ad.addFirst(2);
+
+        ad.max();
+    }
+
     @Test
     public void addTest(){
         ArrayDeque<Integer> ad = new ArrayDeque<>();
@@ -43,6 +60,20 @@ public class ArrayDequeTest {
     }
 
     @Test
+    public void getTest(){
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addFirst(3);
+        ad.addFirst(4);
+
+        System.out.println(ad.get(0));
+        System.out.println(ad.get(1));
+        System.out.println(ad.get(2));
+        System.out.println(ad.get(3));
+    }
+
+    @Test
     public void iteratorTest(){
         ArrayDeque<Integer> ad = new ArrayDeque<>();
         ad.addLast(1);
@@ -62,6 +93,11 @@ public class ArrayDequeTest {
         ad.addLast(1);
         ad.addLast(2);
         ad.addFirst(3);
+        ad.addFirst(4);
+        ad.addFirst(4);
+        ad.addFirst(4);
+        ad.addFirst(4);
+        ad.addFirst(4);
         ad.addFirst(4);
 
         ad.printDeque();

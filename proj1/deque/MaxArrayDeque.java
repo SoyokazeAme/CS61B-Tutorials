@@ -1,15 +1,17 @@
 package deque;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
+public class MaxArrayDeque<T> implements Deque<T>, Iterable<Object> {
     T[] item;
     int size;
     int capacity;
     int nextFirst;
     int nextLast;
+    Comparator<T> comparator;
 
-    public ArrayDeque(){
+    public MaxArrayDeque(){
         capacity = 8;
         item = (T[])new Object[capacity];
         nextFirst = capacity / 2;
@@ -17,12 +19,35 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
         size = 0;
     }
 
-    public ArrayDeque(int capacity){
-        this.capacity = capacity;
+    public MaxArrayDeque(Comparator<T> comparator){
+        capacity = 8;
         item = (T[])new Object[capacity];
         nextFirst = capacity / 2;
         nextLast = nextFirst + 1;
         size = 0;
+        this.comparator = comparator;
+    }
+
+    public T max(){
+        int currFirst = (nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1;
+        T max = item[currFirst];
+        int remainNum = size;
+        for (int i = currFirst; remainNum > 0; i++, remainNum--) {
+            if (i >= capacity) {i -= capacity;}
+            max = comparator.compare(max, item[i]) >= 0 ? max : item[i];
+        }
+        return max;
+    }
+
+    public T max(Comparator c){
+        int currFirst = (nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1;
+        T max = item[currFirst];
+        int remainNum = size;
+        for (int i = currFirst; remainNum > 0; i++, remainNum--) {
+            if (i >= capacity) {i -= capacity;}
+            max = c.compare(max, item[i]) >= 0 ? max : item[i];
+        }
+        return max;
     }
 
     private T[] resize(int nextCapacity){
@@ -98,6 +123,11 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     }
 
     @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
     public T get(int i) {
         if (i >= size) return null;
         int currFirst = (nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1;
@@ -120,15 +150,15 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
 
 
     @Override
-    public Iterator<T> iterator() {
-        return new ArrayDequeIterator<>();
+    public Iterator<Object> iterator() {
+        return new MaxArrayDequeIterator<>();
     }
 
-    private class ArrayDequeIterator<T> implements Iterator<T>{
+    private class MaxArrayDequeIterator<T> implements Iterator<T>{
         int currIndex;
         int remainNum;
 
-        public ArrayDequeIterator(){
+        public MaxArrayDequeIterator(){
             currIndex = (nextFirst + 1 > (capacity - 1)) ? 0 : nextFirst + 1;;
             remainNum = size;
         }
@@ -155,7 +185,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Deque)) return false;
-        ArrayDeque ad = (ArrayDeque) o;
+        MaxArrayDeque ad = (MaxArrayDeque) o;
         if (ad.size != size()) return false;
         int indexOfAd = 0;
         int indexOfItem = 0;
